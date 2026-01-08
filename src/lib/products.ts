@@ -67,22 +67,88 @@ const rawData = [
 ];
 
 const categoriesNames = ['Jackets', 'Sweatshirts', 'Accessories', 'Footwear'];
-const productNames = [
-    "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Jeans",
-    "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jeans", "Jeans", "Sweatshirt", "Sweatshirt", "Sweatshirt",
-    "Jeans", "Sweatshirt", "Sweatshirt", "Jacket", "Jacket", "Sweatshirt", "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt",
-    "Sweatshirt", "Sweatshirt", "Jacket", "Jacket", "Jacket", "Jacket", "Jeans", "Jacket", "Sweatshirt", "Sweatshirt",
-    "Jeans", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket", "Sweatshirt", "Jacket", "Jacket", "Jacket", "Jacket",
-    "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket",
-    "Jacket", "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt"
-];
+const productNamesMap: Record<string, string> = {
+    "p1": "Retro Purple Windbreaker",
+    "p2": "Venom Graphic Hoodie",
+    "p3": "One Piece Charcoal Hoodie",
+    "p4": "Oversized Black Hoodie",
+    "p5": "Pink Circle Graphic Tee",
+    "p6": "Ice Blue Windbreaker",
+    "p7": "Grey Back-Print Windbreaker",
+    "p8": "Yellow Hoodie",
+    "p9": "Weekend Plants Oversized Tee",
+    "p10": "Cream Wide-Leg Jeans",
+    "p11": "Pink DRIP Oversized Sweatshirt",
+    "p12": "Charcoal Washed Hoodie",
+    "p13": "Blue Mickey Sketch Hoodie",
+    "p14": "Black Nostalgia Drip Tee",
+    "p15": "Purple Tie-Dye Sweatshirt",
+    "p16": "Peanuts Social Club Tee",
+    "p17": "Tan Essentials Tee",
+    "p18": "Black Back-Print Tee",
+    "p19": "Purple Stitch-Detail Tee",
+    "p20": "Grey Gradient Tee",
+    "p21": "Striped Black Tee",
+    "p22": "Lion King Sunset Tee",
+    "p23": "Blue Embossed Logo Hoodie",
+    "p24": "Iron Man Windbreaker",
+    "p25": "Tony Stark Signature Jacket",
+    "p26": "Beige '54' Fleece Hoodie",
+    "p27": "Superman Zip-Up Hoodie",
+    "p28": "Black Panther Tee",
+    "p29": "Mode On Puff Print Hoodie",
+    "p30": "Marble Swirl Hoodie",
+    "p31": "Worst Enemies Best Friends Tee",
+    "p32": "Golf Cart Patch Tee",
+    "p33": "Sleek Black Puffer",
+    "p34": "Tri-Color Windbreaker",
+    "p35": "Black Varsity Jacket",
+    "p36": "Red Quilted Jacket",
+    "p37": "Dark Wash Jeans",
+    "p38": "Shearling Collar Flight Jacket",
+    "p39": "Denim Jacket with Phone Pocket",
+    "p40": "Red Bow Denim Jacket",
+    "p41": "Grey Cable-Knit Set",
+    "p42": "Lavender Faux Fur Cape",
+    "p43": "Navy Textured Knit Sweater",
+    "p44": "Cream Zip-Up Hoodie",
+    "p45": "Dark Textured Knit Cardigan",
+    "p46": "Cream Ribbed Turtleneck",
+    "p47": "Plaid Fur-Trim Poncho",
+    "p48": "Heart Pattern Sweatshirt",
+    "p49": "Burgundy Fur-Collar Cape",
+    "p50": "Houndstooth Fur-Collar Coat",
+    "p51": "Brown Cardigan Detail",
+    "p52": "White Fleece Detail",
+    "p53": "Gym Reaper Panda Tee",
+    "p54": "Brown Cardigan Outfit",
+    "p55": "Purple Mickey Mouse Hoodie",
+    "p56": "Brown Winter Parka",
+    "p57": "Long Brown Teddy Coat",
+    "p58": "Olive Fur-Lined Parka",
+    "p59": "Blue Puffer Jacket",
+    "p60": "Black Mickey Hoodie",
+    "p61": "Wollen Shrug",
+    "p62": "Classic Pufferjacket"
+};
 
-export const products: Product[] = rawData.map((line, index) => {
+export const products: Product[] = rawData.map((line) => {
     const parts = line.split(':');
     const dirName = parts[0];
     const files = parts[1].split(',');
-    const category = productNames[index] === "Jacket" ? "Jackets" :
-        productNames[index] === "Sweatshirt" ? "Sweatshirts" : "Jeans";
+
+    // Improved category logic based on descriptive names
+    const name = productNamesMap[dirName] || "Premium Winter Style";
+    const lowerName = name.toLowerCase();
+
+    let category = "Sweatshirts";
+    if (lowerName.includes("jacket") || lowerName.includes("windbreaker") || lowerName.includes("puffer") || lowerName.includes("varsity") || lowerName.includes("coat") || lowerName.includes("parka") || lowerName.includes("cape") || lowerName.includes("poncho")) {
+        category = "Jackets";
+    } else if (lowerName.includes("jeans") || lowerName.includes("pants") || (lowerName.includes("denim") && !lowerName.includes("jacket"))) {
+        category = "Jeans";
+    } else if (lowerName.includes("hoodie") || lowerName.includes("sweatshirt") || lowerName.includes("tee") || lowerName.includes("sweater") || lowerName.includes("cardigan") || lowerName.includes("knit")) {
+        category = "Sweatshirts";
+    }
 
     const priceMap: Record<string, number> = {
         'Sweatshirts': 799,
@@ -92,14 +158,14 @@ export const products: Product[] = rawData.map((line, index) => {
     const price = priceMap[category] || 799;
 
     return {
-        id: (index + 1).toString(),
-        name: productNames[index] || "Sweatshirt",
+        id: dirName,
+        name: name,
         price: price,
         originalPrice: price + 500,
         image: "/products/" + dirName + "/" + files[0],
         images: files.map(f => "/products/" + dirName + "/" + f),
         category,
-        description: "Experience ultimate warmth and style with our " + (productNames[index] || "Sweatshirt") + ". Crafted for the modern winter enthusiast.",
+        description: "Experience ultimate warmth and style with our " + name + ". Crafted for the modern winter enthusiast.",
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Neutral', 'Dark', 'Earth'],
         inStock: true,
