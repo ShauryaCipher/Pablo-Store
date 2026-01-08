@@ -66,7 +66,7 @@ const rawData = [
     "p63:image.png"
 ];
 
-const categoriesNames = ['Jackets', 'Sweaters', 'Accessories', 'Footwear'];
+const categoriesNames = ['Jackets', 'Sweatshirts', 'Accessories', 'Footwear'];
 const productNames = [
     "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Jeans",
     "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jeans", "Jeans", "Sweatshirt", "Sweatshirt", "Sweatshirt",
@@ -74,7 +74,7 @@ const productNames = [
     "Sweatshirt", "Sweatshirt", "Jacket", "Jacket", "Jacket", "Jacket", "Jeans", "Jacket", "Sweatshirt", "Sweatshirt",
     "Jeans", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket", "Sweatshirt", "Jacket", "Jacket", "Jacket", "Jacket",
     "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Jacket",
-    "Jacket", "Jacket", "Jacket"
+    "Jacket", "Jacket", "Jacket", "Sweatshirt", "Sweatshirt", "Sweatshirt", "Sweatshirt"
 ];
 
 export const products: Product[] = rawData.map((line, index) => {
@@ -82,10 +82,10 @@ export const products: Product[] = rawData.map((line, index) => {
     const dirName = parts[0];
     const files = parts[1].split(',');
     const category = productNames[index] === "Jacket" ? "Jackets" :
-        productNames[index] === "Sweatshirt" ? "Sweaters" : "Jeans";
+        productNames[index] === "Sweatshirt" ? "Sweatshirts" : "Jeans";
 
     const priceMap: Record<string, number> = {
-        'Sweaters': 799,
+        'Sweatshirts': 799,
         'Jackets': 899,
         'Jeans': 799
     };
@@ -93,17 +93,17 @@ export const products: Product[] = rawData.map((line, index) => {
 
     return {
         id: (index + 1).toString(),
-        name: productNames[index] || ("Winter Style " + dirName.toUpperCase()),
+        name: productNames[index] || "Sweatshirt",
         price: price,
         originalPrice: price + 500,
         image: "/products/" + dirName + "/" + files[0],
         images: files.map(f => "/products/" + dirName + "/" + f),
         category,
-        description: "Experience ultimate warmth and style with our " + (productNames[index] || dirName.toUpperCase()) + ". Crafted for the modern winter enthusiast.",
+        description: "Experience ultimate warmth and style with our " + (productNames[index] || "Sweatshirt") + ". Crafted for the modern winter enthusiast.",
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Neutral', 'Dark', 'Earth'],
         inStock: true,
     };
 });
 
-export const categories = ['All', 'Jackets', 'Sweaters', 'Jeans'];
+export const categories = ['All', 'Jackets', 'Sweatshirts', 'Jeans'];

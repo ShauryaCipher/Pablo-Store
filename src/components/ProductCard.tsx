@@ -119,7 +119,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Preview Modal */}
       <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden">
+        <DialogContent className="max-w-4xl p-0 max-h-[90vh] overflow-y-auto">
           <div className="grid md:grid-cols-2">
             {/* Product Image Gallery */}
             <div className="relative aspect-square md:aspect-auto bg-secondary/30">
@@ -138,7 +138,7 @@ export function ProductCard({ product }: ProductCardProps) {
                         key={idx}
                         onClick={() => setActiveImageIndex(idx)}
                         className={cn(
-                          "w-12 h-16 rounded-md overflow-hidden border-2 transition-all",
+                          "w-12 h-16 rounded-md overflow-hidden border-2 transition-all flex-shrink-0",
                           activeImageIndex === idx ? "border-primary scale-110" : "border-transparent opacity-70 hover:opacity-100"
                         )}
                       >
@@ -157,7 +157,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Product Details */}
-            <div className="p-6 md:p-8 flex flex-col">
+            <div className="p-6 md:p-8 flex flex-col relative">
               <DialogHeader className="text-left">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                   {product.category}
@@ -180,7 +180,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="mt-6 space-y-6 flex-1">
+              <div className="mt-6 space-y-6 flex-1 pb-20 md:pb-0">
                 {/* Size Selection */}
                 <div>
                   <label className="text-sm font-medium text-foreground">Size</label>
@@ -249,15 +249,17 @@ export function ProductCard({ product }: ProductCardProps) {
               </div>
 
               {/* Add to Cart Button */}
-              <Button
-                variant="cart"
-                size="lg"
-                className="w-full mt-6"
-                onClick={handleAddToCart}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                Add to Cart - ₹{(product.price * quantity).toLocaleString()}
-              </Button>
+              <div className="sticky bottom-0 bg-background pt-4 md:static md:bg-transparent md:pt-6 md:mt-auto border-t md:border-none -mx-6 px-6 -mb-6 pb-6 md:mx-0 md:px-0 md:mb-0 md:pb-0">
+                <Button
+                  variant="cart"
+                  size="lg"
+                  className="w-full"
+                  onClick={handleAddToCart}
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Add to Cart - ₹{(product.price * quantity).toLocaleString()}
+                </Button>
+              </div>
             </div>
           </div>
         </DialogContent>
